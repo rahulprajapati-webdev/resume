@@ -3,32 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rahuk | Resume</title>
+<title>Rahul | Developer Portfolio</title>
 
-<!-- PDF Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <style>
 :root {
-    --bg: #ffffff;
-    --text: #222;
-    --border: #000;
+    --bg: linear-gradient(135deg, #1a1a2e, #16213e);
+    --text: #ffffff;
+    --glass: rgba(255, 255, 255, 0.08);
+    --border: rgba(255,255,255,0.2);
 }
 
-body.dark {
-    --bg: #121212;
-    --text: #f1f1f1;
-    --border: #888;
+body.light {
+    --bg: #f5f5f5;
+    --text: #222;
+    --glass: rgba(255,255,255,0.7);
+    --border: rgba(0,0,0,0.1);
 }
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     background: var(--bg);
     color: var(--text);
+    transition: 0.4s;
 }
 
-/* Top Controls */
+/* Top Bar */
 .top-bar {
     text-align: center;
     padding: 15px;
@@ -41,63 +43,87 @@ body {
     background: #4CAF50;
     color: white;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 20px;
 }
 
+/* Container */
 #resumeContent {
-    width: 210mm;
-    min-height: 297mm;
+    max-width: 1000px;
     margin: auto;
     padding: 20px;
-    background: var(--bg);
-    color: var(--text);
+}
+
+/* Glass Card */
+.card {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
 }
 
 /* Header */
 .header {
     text-align: center;
-    border-bottom: 2px solid #e869ec;
-    padding-bottom: 10px;
 }
 
-.header h1 {
-    margin: 5px 0;
-}
-
-.section {
-    margin-top: 15px;
-}
-
-.section h2 {
-    border-bottom: 1px solid #e869ec;
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-}
-
+/* Grid Layout */
 .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 15px;
 }
 
-ul {
-    margin: 0;
-    padding-left: 20px;
+.grid-2 {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
-/* Hide buttons in PDF */
-@media print {
-    .top-bar {
-        display: none;
-    }
-}
+/* Links */
 a {
-    color: #0066cc;
+    color: #4fc3f7;
     text-decoration: none;
 }
 
-a:hover {
-    text-decoration: underline;
+/* Animation */
+.hidden {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.show {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.6s ease;
+}
+
+/* Mobile */
+@media(max-width: 768px){
+    body {
+        font-size: 14px;
+    }
+}
+
+/* PDF FIX */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    .card {
+        background: white !important;
+        backdrop-filter: none !important;
+        border: none;
+    }
+
+    .top-bar {
+        display: none;
+    }
 }
 </style>
 </head>
@@ -105,37 +131,31 @@ a:hover {
 <body>
 
 <div class="top-bar">
-    <button class="btn" onclick="toggleDark()">🌙 Dark Mode</button>
-    <button class="btn" onclick="downloadPDF()">⬇️ Download Resume</button>
+    <button class="btn" onclick="toggleMode()">🌗 Toggle Theme</button>
+    <button class="btn" onclick="downloadPDF()">⬇️ Download PDF</button>
 </div>
 
-<!-- RESUME -->
 <div id="resumeContent">
 
-    <div class="header">
-        <h1>Rahul
-        
-        </h1>
-        <p>Aspiring Web devloper</p>
-<p>
-    Email: 
-    <a href="mailto:prajapati6629@gmail.com">
-        prajapati6629@gmail.com
-    </a> | India
-</p>
-    </div>
-
-    <div class="section">
-        <h2>Profile</h2>
+    <div class="card header hidden">
+        <h1>Rahul Prajapati</h1>
+        <p>Aspiring Web Developer</p>
         <p>
-            Self-taught aspiring web coder with a passion for building modern websites.
-            Quick learner with practical experience and strong problem-solving skills.
+            <a href="mailto:prajapati6629@gmail.com">prajapati6629@gmail.com</a>
         </p>
     </div>
 
-    <div class="section">
+    <div class="card hidden">
+        <h2>Profile</h2>
+        <p>
+            Self-taught developer crafting modern, responsive web experiences.
+            Passionate about clean UI, performance, and learning fast.
+        </p>
+    </div>
+
+    <div class="card hidden">
         <h2>Skills</h2>
-        <div class="grid">
+        <div class="grid grid-2">
             <div>HTML</div>
             <div>CSS</div>
             <div>JavaScript</div>
@@ -143,40 +163,51 @@ a:hover {
         </div>
     </div>
 
-    <div class="section">
-        <h2>Qualifications</h2>
+    <div class="card hidden">
+        <h2>Projects</h2>
         <ul>
-            <li>Self-Taught Coder</li>
-            <li>Construction Contractor</li>
+            <li>Personal Resume Website</li>
+            <li>Custom Video Player UI</li>
         </ul>
     </div>
 
-    <div class="section">
-    <h2>Social</h2>
-    <p>
-        Instagram: 
-        <a href="https://instagram.com/_mr._prajapati_01" target="_blank">
-            _mr._prajapati_01
-        </a>
-    </p>
-</div>
+    <div class="card hidden">
+        <h2>Social</h2>
+        <p>
+            <a href="https://instagram.com/_mr._prajapati_01" target="_blank">
+                Instagram Profile
+            </a>
+        </p>
+    </div>
+
 </div>
 
 <script>
-function toggleDark() {
-    document.body.classList.toggle("dark");
+function toggleMode(){
+    document.body.classList.toggle("light");
 }
 
-function downloadPDF() {
-    document.body.classList.remove("dark"); // force light mode
+/* Scroll Animation */
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+        }
+    });
+});
 
+document.querySelectorAll(".hidden").forEach(el => observer.observe(el));
+
+/* PDF Download (safe) */
+function downloadPDF(){
     const element = document.getElementById("resumeContent");
+
+    document.body.classList.add("light"); // force clean PDF
 
     const opt = {
         margin: 0,
-        filename: 'Rahuk_Resume.pdf',
-        image: { type: 'jpeg', quality: 1 },
-        html2canvas: { scale: 3 },
+        filename: 'Rahul_Portfolio.pdf',
+        html2canvas: { scale: 2 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
